@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="landing-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="app-title">Smart Expense Tracker</h1>
+            <p class="app-description">Manage your finances intelligently with AI-powered insights</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <svg class="finance-svg" viewBox="0 0 500 400" width="500" height="400">
+                <!-- Finance illustration -->
+                <rect x="50" y="200" width="400" height="150" rx="10" fill="#f0f0f0" />
+                <rect x="80" y="230" width="60" height="100" fill="#4CAF50" />
+                <rect x="160" y="180" width="60" height="150" fill="#2196F3" />
+                <rect x="240" y="150" width="60" height="180" fill="#9C27B0" />
+                <rect x="320" y="200" width="60" height="130" fill="#FF9800" />
+                <!-- Money icons -->
+                <circle cx="110" cy="120" r="40" fill="#FFD700" />
+                <text x="95" y="135" fill="white" font-size="40" font-weight="bold">$</text>
+                <circle cx="400" cy="100" r="30" fill="#4CAF50" />
+                <text x="390" y="110" fill="white" font-size="25" font-weight="bold">$</text>
+                <circle cx="350" cy="50" r="20" fill="#2196F3" />
+                <text x="343" y="58" fill="white" font-size="18" font-weight="bold">$</text>
+                <!-- Line chart -->
+                <path d="M50,380 L450,380" stroke="#333" stroke-width="2" />
+                <path d="M50,380 L50,100" stroke="#333" stroke-width="2" />
+                <path d="M50,350 Q150,280 200,330 T350,200 T450,150" stroke="#FF5722" stroke-width="3" fill="none" />
+            </svg>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-chart-pie feature-icon"></i>
+                <h3>Expense Analysis</h3>
+                <p>Visualize your spending habits with interactive charts</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-robot feature-icon"></i>
+                <h3>AI Insights</h3>
+                <p>Get personalized recommendations to improve your finances</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-tag feature-icon"></i>
+                <h3>Smart Categorization</h3>
+                <p>Automatically categorize your expenses for better tracking</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-money-bill-wave feature-icon"></i>
+                <h3>Savings Tips</h3>
+                <p>Receive actionable advice on how to increase your savings</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

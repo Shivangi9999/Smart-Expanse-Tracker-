@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/expenses.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="expenses-container">
+    <div class="expenses-header">
+        <h1>Expense History</h1>
+        <a href="{{ url_for('add_expense') }}" class="btn btn-primary btn-icon">
+            <i class="fas fa-plus"></i> Add Expense
+        </a>
+    </div>
+    
+    <div class="expenses-filters">
+        <div class="filter-group">
+            <label for="categoryFilter">Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Food">Food</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Housing">Housing</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Education">Education</option>
+                <option value="Travel">Travel</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="dateRangeFilter">Time Period:</label>
+            <select id="dateRangeFilter">
+                <option value="all">All Time</option>
+                <option value="week">This Week</option>
+                <option value="month" selected>This Month</option>
+                <option value="quarter">This Quarter</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="sortByFilter">Sort By:</label>
+            <select id="sortByFilter">
+                <option value="date-desc">Date (Newest)</option>
+                <option value="date-asc">Date (Oldest)</option>
+                <option value="amount-desc">Amount (Highest)</option>
+                <option value="amount-asc">Amount (Lowest)</option>
+            </select>
+        </div>
+        
+        <div class="filter-group search-group">
+            <input type="text" id="searchFilter" placeholder="Search expenses...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </div>
+    
+    <div class="expenses-table-container">
+        <table class="expenses-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="expensesTableBody">
+                {% if expenses %}
+                    {% for expense in expenses %}
+                    <tr data-expense-id="{{ expense.id }}" data-category="{{ expense.category }}">
+                        <td>{{ expense.date }}</td>
+                        <td>
+                            <span class="category-badge category-{{ expense.category.lower() }}">
+                                {{ expense.category }}
+                            </span>
+                        </td>
+                        <td>{{ expense.description if expense.description else 'N/A' }}</td>
+                        <td class="amount-cell">${{ "%.2f"|format(expense.amount) }}</td>
+                        <td class="actions-cell">
+                            <button class="action-btn view-btn" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit-btn" title="Edit Expense">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" title="Delete Expense">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr class="no-expenses-row">
+                        <td colspan="5">
+                            <div class="no-expenses-message">
+                                <i class="fas fa-receipt no-expenses-icon"></i>
+                                <p>No expenses found. Start tracking your spending by adding an expense.</p>
+                                <a href="{{ url_for('add_expense') }}" class="btn btn-primary">Add Expense</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="expenses-summary">
+        <div class="summary-box total-box">
+            <span class="summary-label">Total:</span>
+            <span class="summary-value" id="totalAmount">
+                {% if expenses %}
+                ${{ "%.2f"|format(expenses|sum(attribute='amount')) }}
+                {% else %}
+                $0.00
+                {% endif %}
+            </span>
+        </div>
+        <div class="summary-box count-box">
+            <span class="summary-label">Count:</span>
+            <span class="summary-value" id="expenseCount">{{ expenses|length }}</span>
+        </div>
+        <div class="summary-box average-box">
+            <span class="summary-label">Average:</span>
+            <span class="summary-value" id="averageAmount">
+                {% if expenses %}
+                ${{ "%.2f"|format((expenses|sum(attribute='amount')) / expenses|length) }}
+                {% else %}
+                $0.00
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- View Expense Modal -->
+<div id="viewExpenseModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Expense Details</h2>
+        <div class="expense-details">
+            <div class="detail-item">
+                <span class="detail-label">Date:</span>
+                <span class="detail-value" id="detailDate"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Category:</span>
+                <span class="detail-value" id="detailCategory"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Amount:</span>
+                <span class="detail-value" id="detailAmount"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Description:</span>
+                <span class="detail-value" id="detailDescription"></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/expenses.js') }}"></script>
+{% endblock %}

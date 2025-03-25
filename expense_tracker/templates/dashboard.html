@@ -1,0 +1,262 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome, {{ username }}</h1>
+        <div class="income-display">
+            <span class="income-label">Monthly Income:</span>
+            <span class="income-value">${{ "%.2f"|format(income) }}</span>
+            <button class="btn btn-sm btn-edit" id="editIncomeBtn">
+                <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="dashboard-cards">
+        <div class="card summary-card">
+            <div class="card-header">
+                <h3>Financial Summary</h3>
+                <i class="fas fa-chart-line card-icon"></i>
+            </div>
+            <div class="card-body">
+                <div class="summary-item">
+                    <span class="summary-label">Total Expenses:</span>
+                    <span class="summary-value">${{ "%.2f"|format(stats.total_expenses) }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Expense Ratio:</span>
+                    <span class="summary-value {{ 'text-danger' if stats.expense_ratio > 70 else 'text-success' }}">
+                        {{ "%.1f"|format(stats.expense_ratio) }}%
+                    </span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Savings:</span>
+                    <span class="summary-value {{ 'text-success' if stats.saving_ratio > 20 else 'text-warning' }}">
+                        ${{ "%.2f"|format(stats.saving_amount) }} ({{ "%.1f"|format(stats.saving_ratio) }}%)
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card tips-card">
+            <div class="card-header">
+                <h3>Smart Tips</h3>
+                <i class="fas fa-lightbulb card-icon"></i>
+            </div>
+            <div class="card-body">
+                <ul class="tips-list">
+                    {% for tip in tips %}
+                    <li class="tip-item">
+                        <i class="fas fa-check-circle tip-icon"></i>
+                        <span>{{ tip }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Savings Goals Section -->
+    <div class="savings-goals-section">
+        <div class="section-header">
+            <h2>Your Savings Goals</h2>
+            <button class="btn btn-primary btn-sm" id="addGoalBtn">
+                <i class="fas fa-plus"></i> Add New Goal
+            </button>
+        </div>
+        
+        <div class="goals-container">
+            {% if savings_goals %}
+                {% for item in savings_goals %}
+                <div class="goal-card {{ 'goal-achievable' if item.analysis.is_achievable else 'goal-challenging' }}">
+                    <div class="goal-header">
+                        <h3>{{ item.goal.name }}</h3>
+                        <span class="goal-category">{{ item.goal.category }}</span>
+                        <button class="goal-delete-btn" data-goal-id="{{ item.goal.id }}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="goal-amount">
+                        <div class="amount-item">
+                            <span class="amount-label">Target:</span>
+                            <span class="amount-value">${{ "%.2f"|format(item.goal.target_amount) }}</span>
+                        </div>
+                        <div class="amount-item">
+                            <span class="amount-label">Monthly Saving:</span>
+                            <span class="amount-value">${{ "%.2f"|format(item.goal.monthly_saving) }}</span>
+                        </div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-status">
+                            <span class="status-label">Time to achieve:</span>
+                            <span class="status-value">{{ "%.1f"|format(item.analysis.months_needed) }} months</span>
+                        </div>
+                        <div class="progress-indicator">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ min(100, 100 / item.analysis.months_needed * 6) if item.analysis.months_needed > 0 else 100 }}%"></div>
+                            </div>
+                            <span class="progress-label">{{ "Achievable" if item.analysis.is_achievable else "Challenging" }}</span>
+                        </div>
+                    </div>
+                    <div class="goal-tips">
+                        <div class="tips-toggle">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Tips</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="tips-content">
+                            <ul>
+                                {% for tip in item.analysis.tips %}
+                                <li>{{ tip }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-goals-message">
+                    <i class="fas fa-piggy-bank"></i>
+                    <p>You don't have any savings goals yet. Start planning for your future!</p>
+                    <button class="btn btn-primary" id="noGoalsAddBtn">Create Your First Goal</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="chart-section">
+        <div class="card chart-card">
+            <div class="card-header">
+                <h3>Expense Breakdown</h3>
+                <div class="time-filter">
+                    <button class="btn btn-sm btn-filter active" data-period="month">Month</button>
+                    <button class="btn btn-sm btn-filter" data-period="quarter">Quarter</button>
+                    <button class="btn btn-sm btn-filter" data-period="year">Year</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Replace chart with category cards -->
+                <div id="expense-analysis" class="expense-analysis">
+                    <div class="expense-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading expense data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card recent-expenses-card">
+            <div class="card-header">
+                <h3>Recent Transactions</h3>
+                <a href="{{ url_for('expenses') }}" class="btn btn-sm btn-link">View All</a>
+            </div>
+            <div class="card-body">
+                <div class="expense-list-container">
+                    <div class="expense-list" id="recentExpenses">
+                        <!-- Will be populated by JavaScript -->
+                        <div class="expense-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-circle"></div>
+                                <div class="placeholder-lines">
+                                    <div class="placeholder-line"></div>
+                                    <div class="placeholder-line"></div>
+                                </div>
+                                <div class="placeholder-amount"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-expense-button-container">
+                    <a href="{{ url_for('add_expense') }}" class="btn btn-primary btn-icon">
+                        <i class="fas fa-plus"></i> Add Expense
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Income Modal -->
+<div class="modal" id="editIncomeModal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Update Monthly Income</h2>
+        <form id="updateIncomeForm">
+            <div class="form-group">
+                <label for="newIncome">Income Amount</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <input type="number" id="newIncome" name="income" step="0.01" min="0" value="{{ income }}" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Update Income</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Savings Goal Modal -->
+<div class="modal" id="addGoalModal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Add New Savings Goal</h2>
+        <form action="{{ url_for('add_savings_goal') }}" method="post" id="savingsGoalForm">
+            <div class="form-group">
+                <label for="goal_name">What are you saving for?</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-bullseye"></i>
+                    <input type="text" id="goal_name" name="goal_name" placeholder="e.g., New Laptop, Trip to Goa" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="target_amount">How much do you need?</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                    <input type="number" id="target_amount" name="target_amount" step="0.01" min="1" placeholder="e.g., 50000" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="monthly_saving">How much can you save per month?</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-wallet"></i>
+                    <input type="number" id="monthly_saving" name="monthly_saving" step="0.01" min="1" placeholder="e.g., 5000" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="goal_category">Select a category</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-tags"></i>
+                    <select id="goal_category" name="goal_category" required>
+                        <option value="" disabled selected>Choose a category</option>
+                        {% for category in goal_categories %}
+                        <option value="{{ category }}">
+                            {% if category == 'Electronics' %}📱
+                            {% elif category == 'Travel' %}✈️
+                            {% elif category == 'Home Essentials' %}🏠
+                            {% elif category == 'Vehicle Purchase' %}🚗
+                            {% elif category == 'Education' %}🎓
+                            {% elif category == 'Emergency' %}⚕️
+                            {% endif %}
+                            {{ category }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Create Savings Goal</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

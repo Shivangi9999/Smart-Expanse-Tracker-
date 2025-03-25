@@ -1,0 +1,655 @@
+/* Dashboard Styles */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+}
+
+.income-display {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.income-label {
+    font-weight: 500;
+    margin-right: 0.5rem;
+    color: var(--text-light);
+}
+
+.income-value {
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: 1.2rem;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card .card-body {
+    padding: 1rem 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.summary-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Tips Card */
+.tips-list {
+    list-style: none;
+}
+
+.tip-item {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+}
+
+.tip-item:last-child {
+    margin-bottom: 0;
+}
+
+.tip-icon {
+    color: var(--primary-color);
+    margin-right: 0.8rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+/* Chart Section */
+.chart-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-container {
+    height: 300px !important;
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    margin: 0 auto;
+    display: block;
+    background-color: #fff; /* Ensure a visible background */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Add subtle border */
+    border-radius: var(--border-radius);
+    padding: 10px;
+}
+
+/* Fix for chart container in Safari and Firefox */
+canvas#expenseChart {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 300px;
+}
+
+.time-filter {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-filter {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-filter:hover, .btn-filter.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* NEW: Expense Analysis Styles */
+.expense-analysis {
+    margin-top: 1rem;
+}
+
+.expense-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.expense-loading i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.no-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.no-data-message i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.no-data-message p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.category-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.category-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.category-info h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+}
+
+.category-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.category-amount {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.category-percentage {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 3px;
+}
+
+/* Recent Expenses */
+.expense-list-container {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: var(--border-radius);
+    background-color: rgba(0, 0, 0, 0.02);
+    transition: var(--transition);
+}
+
+.expense-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.expense-info {
+    display: flex;
+    align-items: center;
+}
+
+.expense-category-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: var(--primary-dark);
+}
+
+.expense-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.expense-category {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.expense-date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.expense-amount {
+    font-weight: 600;
+    color: var(--danger-color);
+}
+
+.add-expense-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Placeholder loading animation */
+.expense-placeholder {
+    padding: 0.8rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+}
+
+.placeholder-content {
+    display: flex;
+    align-items: center;
+}
+
+.placeholder-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    margin-right: 1rem;
+}
+
+.placeholder-lines {
+    flex: 1;
+}
+
+.placeholder-line {
+    height: 10px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 5px;
+}
+
+.placeholder-amount {
+    width: 60px;
+    height: 20px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 5px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Savings Goals Section */
+.savings-goals-section {
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    color: var(--primary-dark);
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.goals-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.goal-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color);
+}
+
+.goal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.goal-achievable {
+    border-left-color: var(--success-color);
+}
+
+.goal-challenging {
+    border-left-color: var(--warning-color);
+}
+
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.goal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.goal-category {
+    font-size: 0.8rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    color: var(--text-light);
+}
+
+.goal-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    margin-left: 0.5rem;
+}
+
+.goal-delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--danger-color);
+}
+
+.goal-amount {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.amount-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.amount-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 0.2rem;
+}
+
+.amount-value {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.goal-progress {
+    margin-bottom: 1rem;
+}
+
+.progress-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.status-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.status-value {
+    font-weight: 500;
+}
+
+.progress-indicator {
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.goal-achievable .progress {
+    background-color: var(--success-color);
+}
+
+.goal-challenging .progress {
+    background-color: var(--warning-color);
+}
+
+.progress-label {
+    font-size: 0.8rem;
+    text-align: right;
+    color: var(--text-light);
+}
+
+.goal-achievable .progress-label {
+    color: var(--success-color);
+}
+
+.goal-challenging .progress-label {
+    color: var(--warning-color);
+}
+
+.goal-tips {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 1rem;
+}
+
+.tips-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.tips-toggle i:first-child {
+    margin-right: 0.5rem;
+}
+
+.tips-toggle i:last-child {
+    margin-left: auto;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.tips-toggle.active i:last-child {
+    transform: rotate(180deg);
+}
+
+.tips-content {
+    display: none;
+    padding: 0.5rem;
+    background-color: rgba(76, 175, 80, 0.05);
+    border-radius: var(--border-radius);
+}
+
+.tips-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.tips-content ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.tips-content li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.tips-content li:last-child {
+    margin-bottom: 0;
+}
+
+.no-goals-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.no-goals-message i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.no-goals-message p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .goals-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .goal-amount {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .dashboard-cards, .chart-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-cards {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .income-display {
+        width: 100%;
+    }
+    
+    .category-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 400px) {
+    .category-cards {
+        grid-template-columns: 1fr;
+    }
+}

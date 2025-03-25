@@ -1,0 +1,332 @@
+/* Expenses Page Styles */
+.expenses-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.expenses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.expenses-header h1 {
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+}
+
+/* Filters */
+.expenses-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.search-group {
+    position: relative;
+    flex-grow: 1;
+}
+
+.search-group input {
+    width: 100%;
+    padding-right: 2.5rem;
+}
+
+.search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 2.1rem;
+    color: var(--text-light);
+}
+
+/* Expenses Table */
+.expenses-table-container {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.expenses-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.expenses-table th {
+    background-color: rgba(0, 0, 0, 0.03);
+    text-align: left;
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.expenses-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.expenses-table tr:last-child td {
+    border-bottom: none;
+}
+
+.expenses-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.category-food {
+    background-color: #E3F2FD;
+    color: #1565C0;
+}
+
+.category-transportation {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+}
+
+.category-housing {
+    background-color: #FFF3E0;
+    color: #EF6C00;
+}
+
+.category-utilities {
+    background-color: #F3E5F5;
+    color: #7B1FA2;
+}
+
+.category-entertainment {
+    background-color: #E1F5FE;
+    color: #0277BD;
+}
+
+.category-healthcare {
+    background-color: #FFEBEE;
+    color: #C62828;
+}
+
+.category-shopping {
+    background-color: #E0F2F1;
+    color: #00695C;
+}
+
+.category-education {
+    background-color: #E8EAF6;
+    color: #303F9F;
+}
+
+.category-travel {
+    background-color: #FFF8E1;
+    color: #FF8F00;
+}
+
+.category-others {
+    background-color: #ECEFF1;
+    color: #455A64;
+}
+
+.amount-cell {
+    font-weight: 600;
+    color: var(--danger-color);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-btn:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: var(--secondary-color);
+}
+
+.edit-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+}
+
+.delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--danger-color);
+}
+
+/* No Expenses Message */
+.no-expenses-message {
+    text-align: center;
+    padding: 3rem;
+}
+
+.no-expenses-icon {
+    font-size: 3rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.no-expenses-message p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+/* Expenses Summary */
+.expenses-summary {
+    display: flex;
+    gap: 1rem;
+}
+
+.summary-box {
+    flex: 1;
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.total-box {
+    background-color: rgba(244, 67, 54, 0.05);
+}
+
+.count-box {
+    background-color: rgba(33, 150, 243, 0.05);
+}
+
+.average-box {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+}
+
+.summary-value {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.total-box .summary-value {
+    color: var(--danger-color);
+}
+
+.count-box .summary-value {
+    color: var(--secondary-color);
+}
+
+.average-box .summary-value {
+    color: var(--primary-color);
+}
+
+/* Expense Details Modal */
+.expense-details {
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.detail-label {
+    width: 120px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.detail-value {
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .expenses-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .expenses-summary {
+        flex-direction: column;
+    }
+    
+    .expenses-table {
+        font-size: 0.9rem;
+    }
+    
+    .action-btn {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .expenses-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

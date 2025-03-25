@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2>Create a New Savings Goal</h2>
+            <p>Plan your finances and track progress towards your goals</p>
+        </div>
+        
+        <form action="{{ url_for('add_savings_goal') }}" method="post" class="expense-form">
+            <div class="form-group">
+                <label for="goal_name">What are you saving for?</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-bullseye"></i>
+                    <input type="text" id="goal_name" name="goal_name" placeholder="e.g., New Laptop, Trip to Goa" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="target_amount">How much do you need?</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="target_amount" name="target_amount" step="0.01" min="1" placeholder="e.g., 50000" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="monthly_saving">How much can you save monthly?</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-wallet"></i>
+                        <input type="number" id="monthly_saving" name="monthly_saving" step="0.01" min="1" placeholder="e.g., 5000" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="goal_category">Select a category</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-tags"></i>
+                    <select id="goal_category" name="goal_category" required>
+                        <option value="" disabled selected>Choose a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}">
+                            {% if category == 'Electronics' %}📱
+                            {% elif category == 'Travel' %}✈️
+                            {% elif category == 'Home Essentials' %}🏠
+                            {% elif category == 'Vehicle Purchase' %}🚗
+                            {% elif category == 'Education' %}🎓
+                            {% elif category == 'Emergency' %}⚕️
+                            {% endif %}
+                            {{ category }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-buttons">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Create Savings Goal</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="form-image">
+        <svg class="savings-goal-svg" viewBox="0 0 400 400" width="400" height="400">
+            <!-- Piggy bank illustration -->
+            <ellipse cx="200" cy="220" rx="120" ry="90" fill="#F06292" />
+            <circle cx="140" cy="180" r="15" fill="#ffffff" />
+            <ellipse cx="200" cy="310" rx="80" ry="20" fill="#E91E63" opacity="0.3" />
+            
+            <!-- Ears -->
+            <path d="M120,170 Q90,120 120,90" stroke="#F06292" stroke-width="20" fill="none" />
+            <path d="M280,170 Q310,120 280,90" stroke="#F06292" stroke-width="20" fill="none" />
+            
+            <!-- Snout -->
+            <ellipse cx="220" cy="220" rx="30" ry="20" fill="#E91E63" />
+            <circle cx="230" cy="215" r="5" fill="#ffffff" />
+            <circle cx="210" cy="215" r="5" fill="#ffffff" />
+            
+            <!-- Coin slot -->
+            <rect x="180" y="150" width="40" height="5" fill="#E91E63" />
+            
+            <!-- Legs -->
+            <rect x="150" y="280" width="15" height="30" rx="5" fill="#F06292" />
+            <rect x="235" y="280" width="15" height="30" rx="5" fill="#F06292" />
+            
+            <!-- Coins -->
+            <circle cx="100" cy="350" r="20" fill="#FFD700" />
+            <circle cx="150" cy="350" r="25" fill="#FFD700" />
+            <circle cx="210" cy="350" r="15" fill="#FFD700" />
+            <circle cx="260" cy="350" r="20" fill="#FFD700" />
+            <circle cx="310" cy="350" r="18" fill="#FFD700" />
+            
+            <!-- Dollar signs -->
+            <text x="100" y="355" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
+            <text x="150" y="355" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
+            <text x="210" y="355" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
+            <text x="260" y="355" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
+            <text x="310" y="355" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
+            
+            <!-- Goal related icons -->
+            <circle cx="80" cy="120" r="30" fill="#2196F3" opacity="0.7" />
+            <text x="80" y="128" font-size="20" fill="white" text-anchor="middle">🎯</text>
+            
+            <circle cx="330" cy="150" r="25" fill="#4CAF50" opacity="0.7" />
+            <text x="330" y="158" font-size="20" fill="white" text-anchor="middle">💰</text>
+            
+            <circle cx="300" cy="70" r="20" fill="#FF9800" opacity="0.7" />
+            <text x="300" y="78" font-size="15" fill="white" text-anchor="middle">🏠</text>
+            
+            <animateTransform attributeName="transform" attributeType="XML" type="rotate" 
+                from="0 200 200" to="360 200 200" dur="60s" repeatCount="indefinite" />
+        </svg>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add visual feedback when selecting a category
+    const categorySelect = document.getElementById('goal_category');
+    if (categorySelect) {
+        categorySelect.addEventListener('change', function() {
+            this.classList.add('selected');
+        });
+    }
+    
+    // Form validation
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const targetAmount = parseFloat(document.getElementById('target_amount').value);
+            const monthlySaving = parseFloat(document.getElementById('monthly_saving').value);
+            
+            // Basic validation
+            if (monthlySaving <= 0) {
+                e.preventDefault();
+                alert('Monthly saving amount must be greater than zero.');
+                return;
+            }
+            
+            if (targetAmount <= 0) {
+                e.preventDefault();
+                alert('Target amount must be greater than zero.');
+                return;
+            }
+            
+            if (monthlySaving > targetAmount) {
+                if (!confirm('Your monthly saving amount is greater than your target. This goal will be achieved in less than a month. Do you want to continue?')) {
+                    e.preventDefault();
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card login-card">
+        <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Log in to continue to Smart Expense Tracker</p>
+        </div>
+        
+        <form action="{{ url_for('login') }}" method="post" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+        </div>
+    </div>
+    
+    <div class="auth-image">
+        <svg class="login-svg" viewBox="0 0 400 400" width="400" height="400">
+            <!-- Lock illustration -->
+            <rect x="150" y="150" width="100" height="150" rx="10" fill="#2196F3" />
+            <rect x="130" y="150" width="140" height="30" rx="10" fill="#2196F3" />
+            <circle cx="200" cy="200" r="30" fill="#ffffff" />
+            <rect x="195" y="200" width="10" height="60" fill="#ffffff" />
+            <circle cx="200" cy="200" r="50" fill="none" stroke="#ffffff" stroke-width="3" />
+            
+            <!-- Key illustration -->
+            <circle cx="100" cy="300" r="20" fill="#FFD700" />
+            <rect x="100" y="300" width="60" height="10" fill="#FFD700" />
+            <rect x="140" y="290" width="10" height="30" fill="#FFD700" />
+            <rect x="160" y="290" width="10" height="30" fill="#FFD700" />
+            
+            <!-- Animation elements -->
+            <circle cx="200" cy="200" r="180" fill="none" stroke="#4CAF50" stroke-width="3" stroke-dasharray="20,10">
+                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200 200" to="360 200 200" dur="30s" repeatCount="indefinite" />
+            </circle>
+            
+            <!-- Background elements -->
+            <circle cx="50" cy="50" r="20" fill="#FF5722" opacity="0.5" />
+            <circle cx="350" cy="50" r="15" fill="#9C27B0" opacity="0.5" />
+            <circle cx="350" cy="350" r="25" fill="#2196F3" opacity="0.5" />
+            <circle cx="50" cy="350" r="18" fill="#4CAF50" opacity="0.5" />
+        </svg>
+    </div>
+</div>
+{% endblock %}

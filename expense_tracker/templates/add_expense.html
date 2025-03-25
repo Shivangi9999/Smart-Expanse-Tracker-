@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2>Add New Expense</h2>
+            <p>Track your spending by adding a new expense</p>
+        </div>
+        
+        <form action="{{ url_for('add_expense') }}" method="post" class="expense-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="amount" name="amount" step="0.01" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" id="date" name="date" value="{{ today }}" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-tag"></i>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-comment"></i>
+                    <input type="text" id="description" name="description" placeholder="Optional expense details">
+                </div>
+            </div>
+            
+            <div class="form-buttons">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Add Expense</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="form-image">
+        <svg class="add-expense-svg" viewBox="0 0 400 400" width="400" height="400">
+            <!-- Money/receipt illustration -->
+            <rect x="100" y="80" width="200" height="250" rx="10" fill="#f5f5f5" />
+            <line x1="120" y1="120" x2="280" y2="120" stroke="#4CAF50" stroke-width="2" />
+            <line x1="120" y1="150" x2="280" y2="150" stroke="#ddd" stroke-width="2" />
+            <line x1="120" y1="180" x2="280" y2="180" stroke="#ddd" stroke-width="2" />
+            <line x1="120" y1="210" x2="280" y2="210" stroke="#ddd" stroke-width="2" />
+            <line x1="120" y1="240" x2="280" y2="240" stroke="#ddd" stroke-width="2" />
+            <line x1="120" y1="270" x2="280" y2="270" stroke="#ddd" stroke-width="2" />
+            
+            <!-- Plus sign in a circle -->
+            <circle cx="290" cy="110" r="30" fill="#4CAF50" />
+            <line x1="275" y1="110" x2="305" y2="110" stroke="#fff" stroke-width="4" />
+            <line x1="290" y1="95" x2="290" y2="125" stroke="#fff" stroke-width="4" />
+            
+            <!-- Category icons -->
+            <circle cx="140" y1="180" r="10" fill="#2196F3" />
+            <circle cx="140" y1="210" r="10" fill="#FF9800" />
+            <circle cx="140" y1="240" r="10" fill="#9C27B0" />
+            
+            <!-- Decorative elements -->
+            <circle cx="350" cy="70" r="20" fill="#FF5722" opacity="0.6" />
+            <circle cx="50" cy="150" r="15" fill="#2196F3" opacity="0.6" />
+            <circle cx="70" cy="300" r="25" fill="#4CAF50" opacity="0.6" />
+            <circle cx="330" cy="330" r="18" fill="#9C27B0" opacity="0.6" />
+            
+            <!-- Currency symbols -->
+            <text x="260" y="185" fill="#333" font-size="14">$</text>
+            <text x="260" y="215" fill="#333" font-size="14">€</text>
+            <text x="260" y="245" fill="#333" font-size="14">£</text>
+            
+            <!-- Animation element -->
+            <path d="M50,200 C100,100 300,300 350,200" stroke="#FFD700" stroke-width="3" fill="none" stroke-dasharray="10,5">
+                <animateTransform attributeName="transform" attributeType="XML" type="translate" 
+                                  values="0,0; 0,10; 0,0" dur="3s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add visual feedback when selecting a category
+    const categorySelect = document.getElementById('category');
+    if (categorySelect) {
+        categorySelect.addEventListener('change', function() {
+            this.classList.add('selected');
+        });
+    }
+});
+</script>
+{% endblock %}
